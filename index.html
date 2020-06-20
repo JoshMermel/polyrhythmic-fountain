@@ -15,9 +15,9 @@
       <div class="col-md-6" id="io">
         <h1>Polyrhythmic Fountain</h1>
         <div>
-          Left Hand: <input type="text" style="width: 300px;" id="left" value="0,60" onchange="update()"><br>
-          Right Hand: <input type="text" style="width: 300px;" id="right" value="0,40,80" onchange="update()"><br>
-          Period: <input type="text" id="period" value="120" onchange="update()"><br>
+          Left Hand: <input type="text" style="width: 300px;" id="left" onchange="update()"><br>
+          Right Hand: <input type="text" style="width: 300px;" id="right" onchange="update()"><br>
+          Period: <input type="text" id="period" onchange="update()"><br>
           <div> Animation speed </div>
           <input id="animation_speed" type="text" data-slider-min="1" data-slider-max="40" data-slider-step="1" data-slider-value="10" /></input>
           <hr>
@@ -94,7 +94,13 @@ window.onload = function() {
   $("#animation_speed").on("change", function(slideEvt) {
     pace = slideEvt.value.newValue / 10;
   });
-  update();
+  let l = randInt(1,9);
+  let r = randInt(1,8);
+  if (r >= l) {
+    r += 1;
+  }
+  doRatio(l, r);
+  // update();
   StartAnimation();
 }
 function update() {
