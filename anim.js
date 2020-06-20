@@ -1,5 +1,8 @@
-// stuff to validate: throws aren't closer together than dwell?
-// no throw larger than period.
+// validation
+//   throws aren't closer together than dwell?
+//   no throw larger than period.
+// make dwell a percent instead of a constant?
+// make colors a hash of the pattern so it's random but consistant?
 
 var radius = 10;
 var dwell = 10;
@@ -201,7 +204,6 @@ function update_rballs(landing_times, period, max) {
 }
 
 // return an error if it's bad or empty string if it's good.
-// TODO(jmerm): make sure times are closer together than dwell?
 function validateLandingTimes(str) {
   let last = -1;
   for (let split of str.split(",")) {
@@ -232,7 +234,31 @@ function doRandom() {
   update_lballs(lseq, period, max)
   update_rballs(rseq, period, max);
   recolorRandomly();
+}
 
+function doRatio(l, r) {
+  let period = l * r;
+  while (period < 200) {
+    period += l * r;
+  }
+  let lseq = [];
+  for (let i = 0; i < l; i++) {
+    lseq.push(period * i / l)
+  }
+  let rseq = [];
+  for (let i = 0; i < r; i++) {
+    rseq.push(period * i / r)
+  }
+
+  document.getElementById("left").value = lseq.join(",");
+  document.getElementById("right").value = rseq.join(",");
+  document.getElementById("period").value = period;
+
+  let max = Math.max(maxTime(lseq, period), maxTime(rseq, period));
+
+  update_lballs(lseq, period, max)
+  update_rballs(rseq, period, max);
+  recolorRandomly();
 }
 
 // TODO(jmerm): verify max throw is less than period

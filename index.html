@@ -20,7 +20,60 @@
           Period: <input type="text" id="period" value="120" onchange="update()"><br>
           <div> Animation speed </div>
           <input id="animation_speed" type="text" data-slider-min="1" data-slider-max="40" data-slider-step="1" data-slider-value="10" /></input>
-          <button onclick="doRandom()" type="button">Randomize</button>
+          <hr>
+
+          <table style="width:100%   border: 1px solid black; ">
+            <tr>
+              <th> </th>
+              <th> <button onclick="doRatio(1,2)" type="button">1/2</button> </th>
+              <th> <button onclick="doRatio(1,3)" type="button">1/3</button> </th>
+              <th> <button onclick="doRatio(1,4)" type="button">1/4</button> </th>
+              <th> <button onclick="doRatio(1,5)" type="button">1/5</button> </th>
+              <th> <button onclick="doRatio(1,6)" type="button">1/6</button> </th>
+            </tr>
+            <tr>
+              <th> <button onclick="doRatio(2,1)" type="button">2/1</button> </th>
+              <th>  </th>
+              <th> <button onclick="doRatio(2,3)" type="button">2/3</button> </th>
+              <th> <button onclick="doRatio(2,4)" type="button">2/4</button> </th>
+              <th> <button onclick="doRatio(2,5)" type="button">2/5</button> </th>
+              <th> <button onclick="doRatio(2,6)" type="button">2/6</button> </th>
+            </tr>
+            <tr>
+              <th> <button onclick="doRatio(3,1)" type="button">3/1</button> </th>
+              <th> <button onclick="doRatio(3,2)" type="button">3/2</button> </th>
+              <th>  </th>
+              <th> <button onclick="doRatio(3,4)" type="button">3/4</button> </th>
+              <th> <button onclick="doRatio(3,5)" type="button">3/5</button> </th>
+              <th> <button onclick="doRatio(3,6)" type="button">3/6</button> </th>
+            </tr>
+            <tr>
+              <th> <button onclick="doRatio(4,1)" type="button">4/1</button> </th>
+              <th> <button onclick="doRatio(4,2)" type="button">4/2</button> </th>
+              <th> <button onclick="doRatio(4,3)" type="button">4/3</button> </th>
+              <th> </th>
+              <th> <button onclick="doRatio(4,5)" type="button">4/5</button> </th>
+              <th> <button onclick="doRatio(4,6)" type="button">4/6</button> </th>
+            </tr>
+            <tr>
+              <th> <button onclick="doRatio(5,1)" type="button">5/1</button> </th>
+              <th> <button onclick="doRatio(5,2)" type="button">5/2</button> </th>
+              <th> <button onclick="doRatio(5,3)" type="button">5/3</button> </th>
+              <th> <button onclick="doRatio(5,4)" type="button">5/4</button> </th>
+              <th>  </th>
+              <th> <button onclick="doRatio(5,6)" type="button">5/6</button> </th>
+            </tr>
+            <tr>
+              <th> <button onclick="doRatio(6,1)" type="button">6/1</button> </th>
+              <th> <button onclick="doRatio(6,2)" type="button">6/2</button> </th>
+              <th> <button onclick="doRatio(6,3)" type="button">6/3</button> </th>
+              <th> <button onclick="doRatio(6,4)" type="button">6/4</button> </th>
+              <th> <button onclick="doRatio(6,5)" type="button">6/5</button> </th>
+              <th> </th>
+            </tr>
+          </table>
+          <hr>
+          <button onclick="doRandom()" type="button">Randomize Rhythm</button>
         </div>
 
         <hr/>
