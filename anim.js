@@ -106,15 +106,29 @@ function Ball(toss_x, catch_x, landing_times, period, max) {
     keyframe_count %= period;
     let {up_time, down_time} = upDown(keyframe_count, this.landing_times, this.period);
 
-    if (down_time - keyframe_count > dwell) {
+//    if (down_time - keyframe_count > dwell) {
+//      // toss
+//      let progress = (keyframe_count - up_time) / (down_time - up_time - dwell);
+//      this.x = this.toss_x + ((this.catch_x - this.toss_x) * progress);
+//      this.y = (this.x - this.toss_x) * (this.x - this.catch_x) * (down_time - up_time) * (down_time - up_time) / 5;
+//      this.y /= (this.max * this.max);
+//    } else {
+//      // dwell
+//      let progress = (keyframe_count + dwell - down_time) / (dwell);
+//      this.x = this.catch_x - ((this.catch_x - this.toss_x) * progress);
+//      this.y = -1 * (this.x - this.toss_x) * (this.x - this.catch_x) / 100;
+//    }
+    let progress = (keyframe_count - up_time) / (down_time - up_time);
+    if (progress < 0.9) {
       // toss
-      let progress = (keyframe_count - up_time) / (down_time - up_time - dwell);
+      progress /= 0.9;
       this.x = this.toss_x + ((this.catch_x - this.toss_x) * progress);
       this.y = (this.x - this.toss_x) * (this.x - this.catch_x) * (down_time - up_time) * (down_time - up_time) / 5;
       this.y /= (this.max * this.max);
     } else {
       // dwell
-      let progress = (keyframe_count + dwell - down_time) / (dwell);
+      progress -= 0.9;
+      progress /= 0.1;
       this.x = this.catch_x - ((this.catch_x - this.toss_x) * progress);
       this.y = -1 * (this.x - this.toss_x) * (this.x - this.catch_x) / 100;
     }
