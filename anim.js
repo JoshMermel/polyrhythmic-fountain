@@ -220,7 +220,7 @@ function validateLandingTimes(str) {
   return "";
 }
 
-function doRandom() {
+function doRandomArhythmically() {
   let period = randInt(200, 500);
   let lseq = randomSeq(dwell * 3, period);
   let rseq = randomSeq(dwell * 3, period);
@@ -234,6 +234,15 @@ function doRandom() {
   update_lballs(lseq, period, max)
   update_rballs(rseq, period, max);
   recolorRandomly();
+}
+
+function doRandomNicely() {
+  let l = randInt(1,9);
+  let r = randInt(1,8);
+  if (r >= l) {
+    r += 1;
+  }
+  doRatio(l, r);
 }
 
 function doRatio(l, r) {

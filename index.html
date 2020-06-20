@@ -15,11 +15,14 @@
       <div class="col-md-6" id="io">
         <h1>Polyrhythmic Fountain</h1>
         <div>
-          Left Hand: <input type="text" style="width: 300px;" id="left" onchange="update()"><br>
-          Right Hand: <input type="text" style="width: 300px;" id="right" onchange="update()"><br>
-          Period: <input type="text" id="period" onchange="update()"><br>
+          Left Hand Beats: <input type="text" style="width: 300px;" id="left" onchange="update()"><br>
+          Right Hand Beats: <input type="text" style="width: 300px;" id="right" onchange="update()"><br>
+          Measure Length: <input type="text" id="period" onchange="update()"><br>
           <div> Animation speed </div>
           <input id="animation_speed" type="text" data-slider-min="1" data-slider-max="40" data-slider-step="1" data-slider-value="10" /></input>
+          <hr>
+          <button onclick="doRandomNicely()" type="button">Randomize Nicely</button>
+          <button onclick="doRandomArhythmically()" type="button">Randomize Arhythmically</button>
           <hr>
 
           <table style="width:100%   border: 1px solid black; ">
@@ -72,8 +75,6 @@
               <th> </th>
             </tr>
           </table>
-          <hr>
-          <button onclick="doRandom()" type="button">Randomize Rhythm</button>
         </div>
 
         <hr/>
@@ -94,13 +95,7 @@ window.onload = function() {
   $("#animation_speed").on("change", function(slideEvt) {
     pace = slideEvt.value.newValue / 10;
   });
-  let l = randInt(1,9);
-  let r = randInt(1,8);
-  if (r >= l) {
-    r += 1;
-  }
-  doRatio(l, r);
-  // update();
+  doRandomNicely();
   StartAnimation();
 }
 function update() {
