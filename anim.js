@@ -220,8 +220,8 @@ function validateLandingTimes(str) {
 
 function doRandom() {
   let period = randInt(200, 500);
-  let lseq = randomSeq(dwell * 2, period);
-  let rseq = randomSeq(dwell * 2, period);
+  let lseq = randomSeq(dwell * 3, period);
+  let rseq = randomSeq(dwell * 3, period);
 
   document.getElementById("left").value = lseq.join(",");
   document.getElementById("right").value = rseq.join(",");
