@@ -136,6 +136,16 @@ function StartAnimation() {
   window.requestAnimationFrame(draw);
 }
 
+function clearButtonColor() {
+  for (let i = 1; i <= 6; i++) {
+    for (let j = 1; j <= 6; j++) {
+      if (i !== j) {
+        document.getElementById(i + "/" + j).removeAttribute("style");
+      }
+    }
+  }
+}
+
 // Draws balls to the canvas when time = timestamp.
 var last_draw_time = 0;
 function draw(timestamp) {
@@ -234,11 +244,12 @@ function doRandomArhythmically() {
   update_lballs(lseq, period, max)
   update_rballs(rseq, period, max);
   recolorRandomly();
+  clearButtonColor();
 }
 
 function doRandomNicely() {
-  let l = randInt(2,9);
-  let r = randInt(2,8);
+  let l = randInt(2,6);
+  let r = randInt(2,5);
   if (r >= l) {
     r += 1;
   }
@@ -268,6 +279,8 @@ function doRatio(l, r) {
   update_lballs(lseq, period, max)
   update_rballs(rseq, period, max);
   recolorRandomly();
+  clearButtonColor();
+  document.getElementById(l + "/" + r).setAttribute("style", "background-color:#555e57")
 }
 
 // TODO(jmerm): verify max throw is less than period
@@ -303,4 +316,5 @@ function updateAnimation(llanding_times_str, rlanding_times_str, period) {
   update_lballs(lseq, period, max);
   update_rballs(rseq, period, max);
   recolorRandomly();
+  clearButtonColor();
 }
