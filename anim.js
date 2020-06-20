@@ -280,7 +280,7 @@ function doRatio(l, r) {
   update_rballs(rseq, period, max);
   recolorRandomly();
   clearButtonColor();
-  document.getElementById(l + "/" + r).setAttribute("style", "background-color:#555e57")
+  document.getElementById(l + "/" + r).setAttribute("style", "background-color:#86b3b1")
 }
 
 // TODO(jmerm): verify max throw is less than period
