@@ -237,8 +237,8 @@ function doRandomArhythmically() {
 }
 
 function doRandomNicely() {
-  let l = randInt(1,9);
-  let r = randInt(1,8);
+  let l = randInt(2,9);
+  let r = randInt(2,8);
   if (r >= l) {
     r += 1;
   }
