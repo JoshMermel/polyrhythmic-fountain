@@ -237,9 +237,9 @@ function doRandom() {
 }
 
 function doRatio(l, r) {
-  let period = l * r;
-  while (period < 200) {
-    period += l * r;
+  let period = l * r * 10;
+  while (period < 120) {
+    period += l * r * 10;
   }
   let lseq = [];
   for (let i = 0; i < l; i++) {
