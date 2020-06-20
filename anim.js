@@ -265,7 +265,6 @@ function updateAnimation(llanding_times_str, rlanding_times_str, period) {
   let lseq = toLandingTimes(llanding_times_str);
   let rseq = toLandingTimes(rlanding_times_str);
   let max = Math.max(maxTime(lseq, period), maxTime(rseq, period));
-  console.log(max);
   update_lballs(lseq, period, max);
   update_rballs(rseq, period, max);
   recolorRandomly();
