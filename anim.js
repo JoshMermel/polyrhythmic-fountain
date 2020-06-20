@@ -90,8 +90,6 @@ function maxTime(seq, period) {
 
 // landing times is a sorted array 
 function Ball(toss_x, catch_x, landing_times, period, max) {
-  console.log(landing_times, period);
-
   this.toss_x = toss_x;
   this.catch_x = catch_x;
   this.x = 0;
@@ -109,7 +107,7 @@ function Ball(toss_x, catch_x, landing_times, period, max) {
       // toss
       let progress = (keyframe_count - up_time) / (down_time - up_time - dwell);
       this.x = this.toss_x + ((this.catch_x - this.toss_x) * progress);
-      this.y = (this.x - this.toss_x) * (this.x - this.catch_x) * (down_time - up_time) * (down_time - up_time) / 20;
+      this.y = (this.x - this.toss_x) * (this.x - this.catch_x) * (down_time - up_time) * (down_time - up_time) / 7;
       this.y /= (this.max * this.max);
     } else {
       // dwell
@@ -229,7 +227,7 @@ function doRandom() {
   document.getElementById("right").value = rseq.join(",");
   document.getElementById("period").value = period;
 
-  let max = Math.max((maxTime(lseq, period), maxTime(rseq, period)));
+  let max = Math.max(maxTime(lseq, period), maxTime(rseq, period));
 
   update_lballs(lseq, period, max)
   update_rballs(rseq, period, max);
@@ -266,7 +264,8 @@ function updateAnimation(llanding_times_str, rlanding_times_str, period) {
   // update animations
   let lseq = toLandingTimes(llanding_times_str);
   let rseq = toLandingTimes(rlanding_times_str);
-  let max = Math.max((maxTime(lseq, period), maxTime(rseq, period)));
+  let max = Math.max(maxTime(lseq, period), maxTime(rseq, period));
+  console.log(max);
   update_lballs(lseq, period, max);
   update_rballs(rseq, period, max);
   recolorRandomly();
