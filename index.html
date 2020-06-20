@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+<head>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/bootstrap-slider.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/css/bootstrap-slider.min.css" />
+</head>
+
+<body onload="update()">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6" id="io">
+        <h1>Polyrhythmic Fountain</h1>
+        <div>
+          Left Hand: <input type="text" style="width: 300px;" id="left" value="0,60" onchange="update()"><br>
+          Right Hand: <input type="text" style="width: 300px;" id="right" value="0,40,80" onchange="update()"><br>
+          Period: <input type="text" id="period" value="120" onchange="update()"><br>
+          <div> Animation speed </div>
+          <input id="animation_speed" type="text" data-slider-min="1" data-slider-max="40" data-slider-step="1" data-slider-value="10" /></input>
+          <button onclick="doRandom()" type="button">Randomize</button>
+        </div>
+
+        <hr/>
+      </div>
+      <div class="col-md-6" id="io">
+        <canvas id="canvas" style="border:1px solid #000000;" width=350px height=600px></canvas>
+      </div>
+    </div>
+  </div>
+
+
+<script src="anim.js"></script>
+<script>
+window.onload = function() {
+  $("#animation_speed").slider({
+    value: 10
+  });
+  $("#animation_speed").on("change", function(slideEvt) {
+    pace = slideEvt.value.newValue / 10;
+  });
+  update();
+  StartAnimation();
+}
+function update() {
+  let left = document.getElementById("left").value;
+  let right = document.getElementById("right").value;
+  let period = document.getElementById("period").value;
+  
+  updateAnimation(left, right, +period);
+}
+</script>
+
+
+</html>
