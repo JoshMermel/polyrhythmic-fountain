@@ -231,7 +231,7 @@ function validateLandingTimes(str) {
 }
 
 function doRandomArhythmically() {
-  let period = randInt(200, 500);
+  let period = randInt(100, 400);
   let lseq = randomSeq(dwell * 3, period);
   let rseq = randomSeq(dwell * 3, period);
 
