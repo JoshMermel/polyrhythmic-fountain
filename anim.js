@@ -110,7 +110,7 @@ function Ball(toss_x, catch_x, landing_times, period, max) {
       // toss
       let progress = (keyframe_count - up_time) / (down_time - up_time - dwell);
       this.x = this.toss_x + ((this.catch_x - this.toss_x) * progress);
-      this.y = (this.x - this.toss_x) * (this.x - this.catch_x) * (down_time - up_time) * (down_time - up_time) / 7;
+      this.y = (this.x - this.toss_x) * (this.x - this.catch_x) * (down_time - up_time) * (down_time - up_time) / 5;
       this.y /= (this.max * this.max);
     } else {
       // dwell
@@ -119,7 +119,7 @@ function Ball(toss_x, catch_x, landing_times, period, max) {
       this.y = -1 * (this.x - this.toss_x) * (this.x - this.catch_x) / 100;
     }
     
-    this.y += 500
+    this.y += 550
 
   };
   this.drawSelf = function(ctx) {
