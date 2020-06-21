@@ -152,7 +152,7 @@ function draw(timestamp) {
   last_draw_time = timestamp;
   // on a 60fps screen, each frame should happen about every 16ms.
   keyframe_count += delta * pace / 16;
-  var ctx = document.getElementById('canvas').getContext('2d');
+  var ctx = document.getElementById("canvas").getContext("2d");
   ctx.clearRect(0,0,canvas.width,canvas.height); 
   
   for (let ball of lballs) {
