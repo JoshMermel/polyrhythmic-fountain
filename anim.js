@@ -77,8 +77,8 @@ function upDown(x, arr, period) {
 
 function maxTime(seq, period) {
   let copy = Array.from(seq);
-  copy.push(copy[0] + period)
-  copy.push(copy[1] + period)
+  copy.push(copy[0] + period);
+  copy.push(copy[1] + period);
   let diff = -1;
   for (let i = 0; i < copy.length - 2; i++) {
     if (copy[i + 2] - copy[i] > diff) {
@@ -118,7 +118,7 @@ function Ball(toss_x, catch_x, landing_times, period, max) {
       this.y = -1 * (this.x - this.toss_x) * (this.x - this.catch_x) / 100;
     }
     
-    this.y += 550
+    this.y += 550;
 
   };
   this.drawSelf = function(ctx) {
@@ -167,11 +167,10 @@ function draw(timestamp) {
   window.requestAnimationFrame(draw);
 }
 
-// TODO(jmerm) parametrize number of balls
 function makeBalls(landing_times, period, toss_x, catch_x, max) {
   // first dupe the landing times so it's divisible by the number of balls
-  let b1 = []
-  let b2 = []
+  let b1 = [];
+  let b2 = [];
   let old_length = landing_times.length;
   for (let i = 0; i < old_length; i++) {
     landing_times.push(landing_times[i] + period);
@@ -240,7 +239,7 @@ function doRandomArhythmically() {
 
   let max = Math.max(maxTime(lseq, period), maxTime(rseq, period));
 
-  updateLballs(lseq, period, max)
+  updateLballs(lseq, period, max);
   updateRballs(rseq, period, max);
   recolorRandomly();
   clearButtonColor();
@@ -282,7 +281,6 @@ function doRatio(l, r) {
   document.getElementById(l + "/" + r).setAttribute("style", "background-color:#86b3b1")
 }
 
-// TODO(jmerm): verify max throw is less than period
 function updateAnimation(llanding_times_str, rlanding_times_str, period) {
   if (isNaN(period)) {
     document.getElementById("err").innerHTML = "Error: Failed to parse Measure Length (" + period + ") as an integer";
