@@ -1,9 +1,6 @@
-// validation
-//   no throw larger than period.
-// make colors a hash of the pattern so it's random but consistant?
+// TODO: maybe make colors a hash of the pattern so it's random but consistant?
 
 var radius = 10;
-var dwell_distance = 4;
 var pace = 1; 
 var keyframe_count = 0;
 
@@ -88,6 +85,7 @@ function maxTime(seq, period) {
   return diff;
 }
 
+var dwell_ratio = 0.9;
 // landing times is a sorted array 
 function Ball(toss_x, catch_x, landing_times, period, max) {
   this.toss_x = toss_x;
@@ -104,16 +102,16 @@ function Ball(toss_x, catch_x, landing_times, period, max) {
     let {up_time, down_time} = upDown(keyframe_count, this.landing_times, this.period);
 
     let progress = (keyframe_count - up_time) / (down_time - up_time);
-    if (progress < 0.9) {
+    if (progress < dwell_ratio) {
       // toss
-      progress /= 0.9;
+      progress /= dwell_ratio;
       this.x = this.toss_x + ((this.catch_x - this.toss_x) * progress);
       this.y = (this.x - this.toss_x) * (this.x - this.catch_x) * (down_time - up_time) * (down_time - up_time) / 5;
       this.y /= (this.max * this.max);
     } else {
       // dwell
-      progress -= 0.9;
-      progress /= 0.1;
+      progress -= dwell_ratio;
+      progress /= (1 - dwell_ratio);
       this.x = this.catch_x - ((this.catch_x - this.toss_x) * progress);
       this.y = -1 * (this.x - this.toss_x) * (this.x - this.catch_x) / 100;
     }
