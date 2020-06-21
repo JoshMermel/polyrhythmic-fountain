@@ -1,11 +1,8 @@
 // validation
-//   throws aren't closer together than dwell?
 //   no throw larger than period.
-// make dwell a percent instead of a constant?
 // make colors a hash of the pattern so it's random but consistant?
 
 var radius = 10;
-var dwell = 10;
 var dwell_distance = 4;
 var pace = 1; 
 var keyframe_count = 0;
@@ -106,18 +103,6 @@ function Ball(toss_x, catch_x, landing_times, period, max) {
     keyframe_count %= period;
     let {up_time, down_time} = upDown(keyframe_count, this.landing_times, this.period);
 
-//    if (down_time - keyframe_count > dwell) {
-//      // toss
-//      let progress = (keyframe_count - up_time) / (down_time - up_time - dwell);
-//      this.x = this.toss_x + ((this.catch_x - this.toss_x) * progress);
-//      this.y = (this.x - this.toss_x) * (this.x - this.catch_x) * (down_time - up_time) * (down_time - up_time) / 5;
-//      this.y /= (this.max * this.max);
-//    } else {
-//      // dwell
-//      let progress = (keyframe_count + dwell - down_time) / (dwell);
-//      this.x = this.catch_x - ((this.catch_x - this.toss_x) * progress);
-//      this.y = -1 * (this.x - this.toss_x) * (this.x - this.catch_x) / 100;
-//    }
     let progress = (keyframe_count - up_time) / (down_time - up_time);
     if (progress < 0.9) {
       // toss
@@ -198,11 +183,11 @@ function makeBalls(landing_times, period, toss_x, catch_x, max) {
   return [new Ball(toss_x, catch_x, b1, 2 * period, max), new Ball(toss_x, catch_x, b2, 2 * period, max)];
 }
 
-function randomSeq(dwell, period) {
+function randomSeq(spacing, period) {
   let ret = [];
   ret.push(randInt(0, Math.min(period, 40)));
   while (ret[ret.length - 1] < period) {
-    let tmp = ret[ret.length - 1] + dwell;
+    let tmp = ret[ret.length - 1] + spacing;
     tmp = randInt(tmp, tmp + 120);
     if (tmp < period) {
       ret.push(tmp);
@@ -220,10 +205,10 @@ function toLandingTimes(str) {
   return landing_times;
 }
 
-function update_lballs(landing_times, period, max) {
+function updateLballs(landing_times, period, max) {
   lballs = makeBalls(landing_times, period, 125, 25, max);
 }
-function update_rballs(landing_times, period, max) {
+function updateRballs(landing_times, period, max) {
   rballs = makeBalls(landing_times, period, 225, 325, max);
 }
 
@@ -233,11 +218,11 @@ function validateLandingTimes(str) {
   for (let split of str.split(",")) {
     let tmp = +split;
     if (isNaN(tmp)) {
-      return "failed to parse " + split + " as a number";
+      return "Error: Failed to parse '" + split + "' as a number";
     } else if (tmp < 0) {
-      return "times must be greater than 0";
+      return "Error: Beats must be greater than 0";
     } else if (tmp < last) {
-      return "times must be monotonically increasing";
+      return "Error: Beats must be monotonically increasing";
     }
     last = tmp;
   }
@@ -246,8 +231,8 @@ function validateLandingTimes(str) {
 
 function doRandomArhythmically() {
   let period = randInt(100, 400);
-  let lseq = randomSeq(dwell * 3, period);
-  let rseq = randomSeq(dwell * 3, period);
+  let lseq = randomSeq(30, period);
+  let rseq = randomSeq(30, period);
 
   document.getElementById("left").value = lseq.join(",");
   document.getElementById("right").value = rseq.join(",");
@@ -255,8 +240,8 @@ function doRandomArhythmically() {
 
   let max = Math.max(maxTime(lseq, period), maxTime(rseq, period));
 
-  update_lballs(lseq, period, max)
-  update_rballs(rseq, period, max);
+  updateLballs(lseq, period, max)
+  updateRballs(rseq, period, max);
   recolorRandomly();
   clearButtonColor();
 }
@@ -290,8 +275,8 @@ function doRatio(l, r) {
 
   let max = Math.max(maxTime(lseq, period), maxTime(rseq, period));
 
-  update_lballs(lseq, period, max)
-  update_rballs(rseq, period, max);
+  updateLballs(lseq, period, max)
+  updateRballs(rseq, period, max);
   recolorRandomly();
   clearButtonColor();
   document.getElementById(l + "/" + r).setAttribute("style", "background-color:#86b3b1")
@@ -299,36 +284,43 @@ function doRatio(l, r) {
 
 // TODO(jmerm): verify max throw is less than period
 function updateAnimation(llanding_times_str, rlanding_times_str, period) {
+  if (isNaN(period)) {
+    document.getElementById("err").innerHTML = "Error: Failed to parse Measure Length (" + period + ") as an integer";
+    return;
+  }
+  if (period <= 0) {
+    document.getElementById("err").innerHTML = "Error: Mesure length must be larger than 0";
+    return;
+  }
+
+  // check that sequences can be parsed
   let err = validateLandingTimes(llanding_times_str);
   if (err !== "") {
-    // TODO(jmerm): do something with this error
-    console.log(err);
+    document.getElementById("err").innerHTML = err;
     return;
   }
   err = validateLandingTimes(rlanding_times_str);
   if (err !== "") {
-    // TODO(jmerm): do something with this error
-    console.log(err);
+    document.getElementById("err").innerHTML = err;
     return;
   }
 
-  if (isNaN(period)) {
-    // TODO(jmerm): do something with this error
-    console.log("err");
-    return;
-  }
-  if (period <= 0) {
-    // TODO(jmerm): do something with this error
-    console.log("err");
+  // parse
+  let lseq = toLandingTimes(llanding_times_str);
+  let rseq = toLandingTimes(rlanding_times_str);
+
+  // make sure seqs are shorter than period
+  if (lseq[lseq.length -1] >= period || rseq[rseq.length -1] >= period) {
+    document.getElementById("err").innerHTML = "Error: Landing times must all be less than the period";
     return;
   }
 
   // update animations
-  let lseq = toLandingTimes(llanding_times_str);
-  let rseq = toLandingTimes(rlanding_times_str);
   let max = Math.max(maxTime(lseq, period), maxTime(rseq, period));
-  update_lballs(lseq, period, max);
-  update_rballs(rseq, period, max);
+  updateLballs(lseq, period, max);
+  updateRballs(rseq, period, max);
   recolorRandomly();
+
   clearButtonColor();
+  document.getElementById("err").innerHTML = "";
 }
